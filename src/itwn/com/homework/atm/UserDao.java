@@ -16,12 +16,12 @@ public class UserDao {
     }
 
     //注册
-    public boolean register(User user){
+    public int register(User user){
         if (nameCheck(user.getUserName())==null){
             list.add(user);
-            return true;
+            return 1;
         }else {
-            return false;
+            return 0;
         }
     }
     //查询用户信息
@@ -45,10 +45,13 @@ public class UserDao {
 
     }
     //存钱
-    public void saveMoney(double money,String name){
+    public int saveMoney(double money,String name){
         User temp=nameCheck(name);
-        temp.setMoney(temp.getMoney()+money);
-
+        if (temp!=null&&money>0&&money%100==0) {
+            temp.setMoney(temp.getMoney() + money);
+            return 1;
+        }
+        return 0;
     }
     //转账
     public void transMoney(double money,String name,String transName){

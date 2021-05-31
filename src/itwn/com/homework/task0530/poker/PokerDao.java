@@ -30,39 +30,27 @@ public class PokerDao {
     }
     //发牌
     public void givePoker(){
-        for (int i=0;i<17;i++){
-
-            user1list.add(totalList.get(0));
-            totalList.remove(0);
-            user2list.add(totalList.get(0));
-            totalList.remove(0);
-            user3list.add(totalList.get(0));
-            totalList.remove(0);
-
-        }
+            while (totalList.size()>3) {
+                user1list.add(totalList.get(0));
+                totalList.remove(0);
+                user2list.add(totalList.get(0));
+                totalList.remove(0);
+                user3list.add(totalList.get(0));
+                totalList.remove(0);
+            }
     }
     //看牌
     public MyArrayList getPoker(MyArrayList checkList){
         return checkList;
     }
     //码牌
-    public void sortPoker(){
+    public void sortPoker(MyArrayList list){
         for (int i=1;i<17;i++){
             for (int j=0;j<17-i;j++){
-                Poker poker01=(Poker) user1list.get(j);
-                Poker poker02=(Poker) user1list.get(j+1);
+                Poker poker01=(Poker) list.get(j);
+                Poker poker02=(Poker) list.get(j+1);
                 if (poker01.getId()<poker02.getId()){
-                    user1list.swap(j,j+1);
-                }
-                poker01=(Poker) user2list.get(j);
-                poker02=(Poker) user2list.get(j+1);
-                if (poker01.getId()<poker02.getId()){
-                    user2list.swap(j,j+1);
-                }
-                poker01=(Poker) user3list.get(j);
-                poker02=(Poker) user3list.get(j+1);
-                if (poker01.getId()<poker02.getId()){
-                    user3list.swap(j,j+1);
+                    list.swap(j,j+1);
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.itwn.littlesystem;
+package itwn.com.homework.littletrik;
 
 import java.util.Scanner;
 public class MYCalender {

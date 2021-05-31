@@ -1,4 +1,4 @@
-package com.itwn.littlesystem;
+package itwn.com.homework.littletrik;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

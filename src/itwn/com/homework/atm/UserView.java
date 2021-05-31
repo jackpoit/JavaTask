@@ -78,7 +78,7 @@ public class UserView {
         System.out.println("请输入要存的钱数：");
         double money=sc.nextDouble();
         User regisUser=new User(userName,userPass,userPhone,money);
-        if(userDao.register(regisUser)){
+        if(userDao.register(regisUser)==1){
             System.out.println("注册成功");
         }else {
             System.out.println("该用户名已被注册");

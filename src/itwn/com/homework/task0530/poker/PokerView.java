@@ -37,7 +37,9 @@ public class PokerView {
             }else if(mainInput.equals("4")){
                         getPoker();
             }else if(mainInput.equals("5")){
-                        pokerDao.sortPoker();
+                pokerDao.sortPoker(pokerDao.getUser1list());
+                pokerDao.sortPoker(pokerDao.getUser2list());
+                pokerDao.sortPoker(pokerDao.getUser3list());
                 System.out.println("码牌结束");
             }else if(mainInput.equals("6")){
                 System.out.println("退出系统");
