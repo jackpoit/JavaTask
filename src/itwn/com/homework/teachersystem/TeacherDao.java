@@ -109,7 +109,7 @@ public class TeacherDao {
 			return 0;
 		}
 	}
-	//排序
+	//学生排序
 	public int sortOfStu(){
 		for (int i=1;i<studentList.size();i++){
 			for (int j=0;j<studentList.size()-i;j++){
