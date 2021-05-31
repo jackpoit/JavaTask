@@ -3,13 +3,12 @@ package itwn.com.homework.task0527;
 public class Animal1Demo {
     public static void main(String[] args) {
         Animal1 animal01= new Dog();
+        System.out.println(animal01.type);
         System.out.println(animal01.sound());
+
         animal01=new Cat();
         //把Cat类的对象赋值给Animal1类型的变量没问题
         System.out.println(animal01.sound());
-
-
-
 
         Animal1 animal02=new LittleDog();
         Dog dog=(Dog)animal02;
@@ -19,6 +18,7 @@ public class Animal1Demo {
         //子对象转父类型（不如说成把子对象地址赋予给父变量）自动转，因为子类对象方法多，父类需要调用的子类都有，
         // 如： Animal1 animal01=new Dog();
         // 只是子类独有的方法就没了 除了重写的父类方法，其实就是就近原则，
+        // *****注意 子对象转父类型 父类的属性就算子类隐藏了  调用的也是父类的属性
         // 父类调用的都是自己的方法，继承给了子类 ，子类重写了，调用是就近调用了子类重写的父类方法
 
 
