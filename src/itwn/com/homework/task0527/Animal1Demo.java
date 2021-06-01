@@ -2,11 +2,11 @@ package itwn.com.homework.task0527;
 
 public class Animal1Demo {
     public static void main(String[] args) {
-        Animal1 animal01= new Dog();
+        Dog animal01= new Dog();
         System.out.println(animal01.type);
         System.out.println(animal01.sound());
 
-        animal01=new Cat();
+//        animal01=new Cat();
         //把Cat类的对象赋值给Animal1类型的变量没问题
         System.out.println(animal01.sound());
 

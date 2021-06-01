@@ -1,7 +1,5 @@
 package itwn.com.test01;
 
-public class Test01 {
-	public static void main(String[] args) {
-		System.out.println(-5%2);
-	}
+public abstract class Test01 {
+
 }
