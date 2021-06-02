@@ -1,8 +1,8 @@
 package itwn.com.homework.task0601.teastusystem;
 
 public class Student implements Person {
-	String name;
-	int score;
+	private String name;
+	private int score;
 	public Student(){}
 	public Student(String name,int score){
 		this.name=name;
@@ -17,5 +17,21 @@ public class Student implements Person {
 	public Boolean depend(Person person) {
 		Student student=(Student) person;
 		return student.score >=90;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 }
