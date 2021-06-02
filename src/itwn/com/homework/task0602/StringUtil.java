@@ -57,4 +57,13 @@ public abstract class StringUtil {
 		}
 		return res;
 	}
+	public static String clearStr(String str){
+		String res="";
+		while (str.length()!=0){
+			res+=str.charAt(0);
+			str=str.replace(str.charAt(0)+"","");
+		}
+		return res;
+	}
+
 }

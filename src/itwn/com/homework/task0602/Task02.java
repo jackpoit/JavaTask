@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class Task02 {
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
-
-		System.out.println("输入");
+		System.out.println("输入：");
 		String input=sc.nextLine();
 		int[] nums=new int[5];
 		for (int i=0;i<input.length();i++){

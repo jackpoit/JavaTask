@@ -8,9 +8,8 @@ public class Task04 {
 		System.out.println("请输入年份：");
 		String output=sc.next()+0;
 		String[] list={"台式机","笔记本","其他"};
-		System.out.println("请输入产品类型（1.台式机 2.笔记本 3.其他");
+		System.out.println("请输入产品类型（1.台式机 2.笔记本 3.其他）");
 		output+=list[sc.nextInt()-1];
-
 		String rnum="";
 		for (char c='0';c<='9';c++){
 			rnum+=c;
@@ -26,6 +25,6 @@ public class Task04 {
 			output+=rnum.charAt((int)(Math.random()*62));
 		}
 		System.out.println(output);
-		System.out.println(rnum);
+
 	}
 }

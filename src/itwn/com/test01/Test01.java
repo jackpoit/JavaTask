@@ -11,10 +11,8 @@ import java.util.Scanner;
 
 public abstract class Test01 {
 	public static void main(String[] args) {
-		String str="我";
-		byte[] bs=str.getBytes();
-		System.out.println(Arrays.toString(bs));
-		String str1=new String(new char[]{'1','2','c'});
-		System.out.println(str1);
+		String str="accacca";
+		System.out.println(str.replace("a","b"));
+
 	}
 }
