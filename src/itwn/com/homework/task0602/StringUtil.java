@@ -65,5 +65,14 @@ public abstract class StringUtil {
 		}
 		return res;
 	}
+	public static void getALLCharCount(String str){
+		while (str.length()!=0){
+			int count=str.length();
+			String cStr=str.charAt(0)+"";
+			str=str.replace(cStr,"");
+			System.out.println(cStr+":"+(count-str.length()));
+
+		}
+	}
 
 }

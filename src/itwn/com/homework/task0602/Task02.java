@@ -7,9 +7,10 @@ public class Task02 {
 		Scanner sc=new Scanner(System.in);
 		System.out.println("输入：");
 		String input=sc.nextLine();
+		char[] ss=input.toCharArray();
 		int[] nums=new int[5];
 		for (int i=0;i<input.length();i++){
-			int n=input.charAt(i);
+			char n=input.charAt(i);
 			if (('a'<=n&&n<='z')||(n>='A'&&n<='Z')){
 				nums[0]++;
 			}else if (n>='0'&&n<='9'){
