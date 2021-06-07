@@ -1,14 +1,13 @@
 package itwn.com.homework.task0604.ordersystem;
 
-import java.util.ArrayList;
 
 public class MyArrayList<E> {
     private int size;
-    private E[] data;
+    private Object[] data;
 
     //构造函数 传入容量构造数组
     public MyArrayList(int capacity) {
-        data = (E[]) new Object[capacity]; //建一个Object类的数组，然后强转为E[]
+        data = new Object[capacity]; //建一个Object类的数组，然后强转为E[]
         size = 0;
     }
 
@@ -34,7 +33,6 @@ public class MyArrayList<E> {
 
     //在index索引位置插入新元素e
     public void add(int index, E e) {
-
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Add failed.Require index >= 0 and index <= size.");
             //index可以等于size   就相当于在所有元素后添加一个
@@ -66,7 +64,7 @@ public class MyArrayList<E> {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Get failed. Index is illegal.");
         }
-        return data[index];
+        return (E)data[index];
     }
 
     public E getLast() {
@@ -112,7 +110,7 @@ public class MyArrayList<E> {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove failed. Index is illegal.");
         }
-        E res = data[index];
+        Object res = data[index];
         for (int i = index + 1; i < size; i++) {
             data[i - 1] = data[i];
         }
@@ -126,7 +124,7 @@ public class MyArrayList<E> {
         //
         // 二次分析 不加&&data.length/2!=0也不会出错 因为 当最后需要缩容时
         //size=0,data.length=1,之后remove会报异常 不会执行resize
-        return res;
+        return (E)res;
     }
 
     // 从数组中删除第一个元素, 返回删除的元素
@@ -149,14 +147,14 @@ public class MyArrayList<E> {
 
     // 将数组空间的容量变成newCapacity大小
     private void resize(int newCapacity) {
-        E[] newData = (E[]) new Object[newCapacity];
+        Object[] newData =  new Object[newCapacity];
         for (int i = 0; i < size; i++) {
             newData[i] = data[i];
         }
         data = newData;
     }
     public void swap(int i,int j) {
-        E temp=data[i];
+        Object temp=data[i];
         data[i]=data[j];
         data[j]=temp;
     }
