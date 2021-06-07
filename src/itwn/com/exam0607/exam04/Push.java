@@ -1,4 +1,4 @@
-package itwn.com.homework.task0604.task23;
+package itwn.com.exam0607.exam04;
 
 public class Push implements Door{
 

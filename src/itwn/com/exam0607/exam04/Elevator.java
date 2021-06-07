@@ -1,4 +1,4 @@
-package itwn.com.homework.task0604.task23;
+package itwn.com.exam0607.exam04;
 
 public class Elevator implements Door,SmokeAlarm{
 
@@ -10,5 +10,10 @@ public class Elevator implements Door,SmokeAlarm{
 	@Override
 	public void close() {
 		System.out.println("关电梯门");
+	}
+
+	@Override
+	public void preSmoke() {
+		System.out.println("防盗门的防烟功能");
 	}
 }

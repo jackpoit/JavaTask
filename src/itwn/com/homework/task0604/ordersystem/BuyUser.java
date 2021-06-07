@@ -7,7 +7,7 @@ public class BuyUser {
 	private String userPass;
 	private String userPhone;
 	private String userEmail;
-	private MyArrayList userOrders;
+	private MyArrayList<Order> userOrders;
 
 	public BuyUser() {
 	}
@@ -17,13 +17,13 @@ public class BuyUser {
 		this.userPass = userPass;
 		this.userPhone = userPhone;
 		this.userEmail = userEmail;
-		this.userOrders=new MyArrayList();
+		this.userOrders=new MyArrayList<>();
 	}
-	public MyArrayList getUserOrders() {
+	public MyArrayList<Order> getUserOrders() {
 		return userOrders;
 	}
 
-	public void setUserOrders(MyArrayList userOrders) {
+	public void setUserOrders(MyArrayList<Order> userOrders) {
 		this.userOrders = userOrders;
 	}
 	public String getUserAccount() {

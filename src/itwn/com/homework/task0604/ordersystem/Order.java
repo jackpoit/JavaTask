@@ -1,5 +1,6 @@
 package itwn.com.homework.task0604.ordersystem;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order {
@@ -62,10 +63,14 @@ public class Order {
 
 	@Override
 	public String toString() {
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String startTimeStr=sdf.format(startTime);
+		String endTimeStr=sdf.format(endTime);
+
 		return "Order{" +
 				"id='" + id + '\'' +
-				", startTime='" + startTime + '\'' +
-				", endTime='" + endTime + '\'' +
+				", startTime='" + startTimeStr + '\'' +
+				", endTime='" + endTimeStr + '\'' +
 				", money=" + money +
 				", status=" + status +
 				'}';

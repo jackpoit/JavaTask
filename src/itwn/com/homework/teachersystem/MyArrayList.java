@@ -1,5 +1,6 @@
 package itwn.com.homework.teachersystem;
 
+
 public class MyArrayList {
     private Object[] objs=new Object[10];
     private int size;//统计数组中实际放置的元素个数
@@ -12,12 +13,12 @@ public class MyArrayList {
         if(size==objs.length){
             Object[] newArr=new Object[size+(size>>1)];
             for (int i=0;i<size;i++){
-                    newArr[i]=objs[i];
-                }
+                newArr[i]=objs[i];
+            }
             objs=newArr;
         }
         objs[size]=obj;
-            size++;
+        size++;
     }
 
     /**

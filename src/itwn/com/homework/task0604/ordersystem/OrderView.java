@@ -95,11 +95,11 @@ public class OrderView {
 
 	//添加订单
 	public static void addOrder() {
-		String startTime = MyUtil.letterDepend(4);
-		String endTime = MyUtil.letterDepend(5);
+//		String startTime = MyUtil.letterDepend(4);
+//		String endTime = MyUtil.letterDepend(5);
 		double money = Double.parseDouble(MyUtil.letterDepend(6));
 		int status = Integer.parseInt(MyUtil.letterDepend(7));
-		int i = buyUserDAO.addOrder(startTime, endTime, money, status, loginUserAccount);
+		int i = buyUserDAO.addOrder(money, status, loginUserAccount);
 		if (i == 1) {
 			System.out.println("订单添加成功");
 		}else {
