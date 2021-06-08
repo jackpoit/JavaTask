@@ -15,6 +15,8 @@ public class BuyUserDAO {
 		}
 		return null;
 	}
+	//通过用户名 检测 返回
+
 	//注册
 	public int register(BuyUser buyUser){
 		if (nameCheck(buyUser.getUserAccount())==null){
@@ -24,48 +26,61 @@ public class BuyUserDAO {
 			return 0;
 		}
 	}
-	//查询用户信息
-	public void queryAllUser(){
-		if (usersList.size()==0){
-			System.out.println("没有用户");
+
+	//登录  -1 无用户  1成功  0失败
+ 	public int loginIn(String account,String pass){
+		BuyUser temp=nameCheck(account);
+		if (temp==null){
+			return -1;
+		} else if (nameCheck(account).getUserPass().equals(pass)){
+			return 1;
 		}else {
-			for (int i = 0; i < usersList.size(); i++) {
-				System.out.println(usersList.get(i));
-			}
+			return 0;
 		}
 	}
 
-	//查询用户全部订单
-	public void queryAllOrder(String account){
-		BuyUser temp=nameCheck(account);
-		if (temp.getUserOrders().size()==0){
-			System.out.println("没有订单");
+	//查询用户信息
+	public String queryAllUser(){
+		String res="";
+		if (usersList.size()==0){
+			return "没有用户";
 		}else {
-			for (int i=0;i<temp.getUserOrders().size();i++){
-				System.out.println(temp.getUserOrders().get(i));
+			for (int i = 0; i < usersList.size(); i++) {
+				res+=usersList.get(i).toString()+"\n";
 			}
 		}
+		return res;
+	}
+
+	//查询用户全部订单
+	public String queryAllOrder(String account){
+		BuyUser temp=nameCheck(account);
+		String res="";
+		if (temp.getUserOrders().size()==0){
+			return "没有订单";
+		}else {
+			for (int i=0;i<temp.getUserOrders().size();i++){
+				res+=temp.getUserOrders().get(i)+"\n";
+			}
+		}
+		return res;
 	}
 	//添加用户订单
 	public int addOrder(double money,int status,String account)  {
-		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMddHHmmss");
-		Date now=new Date();
-		String id=sdf.format(now);
-//		SimpleDateFormat sdf1=new SimpleDateFormat("yyyyMMdd");
-//		Date startTime1= null;
-//		try {
-//			startTime1 = sdf1.parse(startTime);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-		Date endTime= new Date(2077-1900,0,1);
-//		try {
-//			endTime1 = sdf1.parse(endTime);
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
-		nameCheck(account).getUserOrders().addLast(new Order(id,now,endTime,money,status));
-		return 1;
+		if (money>0) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+			Date now = new Date();
+			String id = sdf.format(now);
+			Date endTime;
+			if (status==2) {
+				endTime = new Date();
+			}else {
+				endTime=null;
+			}
+			nameCheck(account).getUserOrders().addLast(new Order(id, now, endTime, money, status));
+			return 1;
+		}
+		return 0;
 	}
 
 	//根据id查找订单
@@ -103,6 +118,7 @@ public class BuyUserDAO {
 			return 0;
 		}
 	}
+
 	public int sortOrder(String account){
 		MyArrayList<Order> list=nameCheck(account).getUserOrders();
 		for (int i=1;i<list.size();i++){

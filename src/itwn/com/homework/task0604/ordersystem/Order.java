@@ -65,7 +65,8 @@ public class Order {
 	public String toString() {
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String startTimeStr=sdf.format(startTime);
-		String endTimeStr=sdf.format(endTime);
+
+		String endTimeStr=endTime==null?null:sdf.format(endTime);
 
 		return "Order{" +
 				"id='" + id + '\'' +

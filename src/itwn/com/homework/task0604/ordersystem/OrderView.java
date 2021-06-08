@@ -20,7 +20,7 @@ public class OrderView {
 					registerView();
 			} else if (input.equals("3")) {
 				System.out.println("正在查询所有用户信息");
-				buyUserDAO.queryAllUser();
+				System.out.println(buyUserDAO.queryAllUser());
 			} else if (input.equals("4")) {
 				System.out.println("正在退出");
 				System.exit(0);
@@ -33,23 +33,20 @@ public class OrderView {
 	public static void loginView() {
 		System.out.println("请输入账户：");
 		String account = scanner.next();
-		BuyUser loginUser = buyUserDAO.nameCheck(account);
-		if (loginUser != null) {
-			System.out.println("账户正确");
-			System.out.println("请输入密码：");
-			String pass = scanner.next();
-			if (loginUser.getUserPass().equals(pass)) {
-				System.out.println("密码正确,正在登陆......");
-				loginUserAccount =loginUser.getUserAccount();
-				insideView();
-			}else {
-				System.out.println("密码错误，请重新登录");
-			}
-		}else {
+		System.out.println("请输入密码：");
+		String pass = scanner.next();
+		int depend=buyUserDAO.loginIn(account,pass);
+		if (depend==-1) {
 			System.out.println("账户未注册");
+		}else if (depend==1){
+			System.out.println("密码正确,正在登陆......");
+				loginUserAccount =account;
+				insideView();
+		}else {
+			System.out.println("密码错误，请重新登录");
 		}
-
 	}
+
 	//注册界面
 	public static void registerView(){
 		String userNo=MyUtil.letterDepend(0);
@@ -72,7 +69,7 @@ public class OrderView {
 			String input = scanner.next();
 			if (input.equals("1")) {
 				System.out.println("正在查询用户所有订单....");
-				buyUserDAO.queryAllOrder(loginUserAccount);
+				System.out.println(buyUserDAO.queryAllOrder(loginUserAccount));
 			} else if (input.equals("2")) {
 				addOrder();
 			} else if (input.equals("3")) {
