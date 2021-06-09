@@ -1,4 +1,4 @@
-package itwn.com.Test03;
+package itwn.com.test03;
 
 public class Test01 {
 	public static void main(String[] args) {

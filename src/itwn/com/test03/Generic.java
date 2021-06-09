@@ -1,4 +1,4 @@
-package itwn.com.Test03;
+package itwn.com.test03;
 
 public interface Generic<K> {
 

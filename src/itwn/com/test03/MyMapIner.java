@@ -1,4 +1,4 @@
-package itwn.com.Test03;
+package itwn.com.test03;
 
 public class MyMapIner<K,U> implements Mymap<U,K> {
 				//Mymap里的参数<U,K> 是随便定的 不需要和接口Mymap里的<K,V>一样，只是位置相对应，U-->K,K-->V
@@ -14,4 +14,5 @@ public class MyMapIner<K,U> implements Mymap<U,K> {
 	public void method2(K k) {
 
 	}
+
 }

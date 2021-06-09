@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class BuyUserDAO {
 	private MyArrayList<BuyUser> usersList=new MyArrayList<>();
+	private MyArrayList us=new MyArrayList<>();
 	//检查用户名是否存在 返回用户对象
 	public BuyUser nameCheck(String name) {
 		for (int i = 0; i < usersList.size(); i++) {
