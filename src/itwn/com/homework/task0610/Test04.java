@@ -1,9 +1,7 @@
 package itwn.com.homework.task0610;
 
-import com.sun.deploy.util.StringUtils;
-
-import java.util.HashSet;
 import java.util.Scanner;
+import java.util.TreeSet;
 
 public class Test04 {
     public static void main(String[] args) {
@@ -11,7 +9,7 @@ public class Test04 {
         String[] strs=new String[]{"","","","",""};
         for (int i=0;i<5;i++){
             System.out.println("请输入第"+(i+1)+"道题答案");
-            HashSet<Character> set=new HashSet<>();
+            TreeSet<Character> set=new TreeSet<>();
             for (char c:scanner.next().toLowerCase().toCharArray()){
                 set.add(c);
             }

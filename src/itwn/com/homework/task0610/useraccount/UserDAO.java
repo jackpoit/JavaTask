@@ -29,11 +29,24 @@ public class UserDAO {
 		return 0;
 	}
 	//查看
-	public void queryUser(){
+	public void queryAllUser(){
 		Set<Map.Entry<String,User>> set=map.entrySet();
 		for (Map.Entry<String,User> e:set){
-			System.out.println(e.getValue());
+			String str="User{" +
+					"id=" + e.getValue().getId() +
+					", userNo='" + e.getValue().getUserNo() + '\'' +
+					", userName='" + e.getValue().getUserName() + '\'' +
+					", userPass='" + "******" + '\'' +
+					", userPhone='" + e.getValue().getUserPhone().substring(0,8)+"****" + '\'' +
+					", money=" + e.getValue().getMoney() +
+					'}'+"\n";
+			System.out.print(str);
 		}
+	}
+
+	//查看个人信息
+	public String queryUser(String key){
+		return map.get(key).toString();
 	}
 	//
 	public boolean nameCheck(String userNo){
@@ -49,6 +62,38 @@ public class UserDAO {
 			return true;
 		}
 	}
+
+	//存钱
+	public boolean savaMoney(String key,double money){
+		if (money%100==0&&money>0){
+			User temp=map.get(key);
+			temp.setMoney(temp.getMoney()+money);
+			return true ;
+		}else {
+			return false;
+		}
+	}
+	//取钱
+	public boolean getUserMoney(String key,double money){
+		User temp=map.get(key);
+		double saved=temp.getMoney();
+		if (money%100==0&&money>0&&saved>=money){
+			temp.setMoney(temp.getMoney()-money);
+			return true;
+		}else {
+			return false;
+		}
+	}
+	//转账
+	public boolean transMoney(String key,double money,String transUser){
+		if (getUserMoney(key,money)){
+			savaMoney(transUser,money);
+			return true;
+		}
+		return false;
+	}
+
+
 	public LinkedHashMap<String, User> getMap() {
 		return map;
 	}

@@ -13,7 +13,7 @@ public class User {
 	}
 
 	public User(String userNo) {
-		this(userNo,"jack","123456","10086666666",10000);
+		this(userNo,userNo,"123456","10086666666",10000);
 	}
 
 	public User(String userNo, String userName, String userPass, String userPhone, double money) {
@@ -108,8 +108,8 @@ public class User {
 				"id=" + id +
 				", userNo='" + userNo + '\'' +
 				", userName='" + userName + '\'' +
-				", userPass='" + "******" + '\'' +
-				", userPhone='" + userPhone.substring(0,8)+"****" + '\'' +
+				", userPass='" + userPass + '\'' +
+				", userPhone='" + userPhone + '\'' +
 				", money=" + money +
 				'}'+"\n";
 	}

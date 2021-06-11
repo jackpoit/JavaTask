@@ -1,10 +1,13 @@
 package itwn.com.homework.task0610.useraccount;
 
+import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
+
 import java.util.Scanner;
 
 public class UserView {
 	private static Scanner scanner=new Scanner(System.in);
 	private static UserDAO userDAO=new UserDAO();
+	private static String loginUserNo;
 	public static void main(String[] args) {
 			mainView();
 	}
@@ -29,7 +32,7 @@ public class UserView {
 						System.out.println("查无此人");
 					}
 			} else if (input.equals("4")) {
-					userDAO.queryUser();
+					userDAO.queryAllUser();
 			}else if (input.equals("5")) {
 				System.out.println("正在退出");
 				System.exit(0);
@@ -45,6 +48,7 @@ public class UserView {
 			int i=userDAO.login(userNo,userPass);
 			if (i==1){
 				System.out.println("账号密码正确");
+					loginUserNo=userNo;
 					loginSuccessView();
 			}else if (i==0){
 				System.out.println("密码错误");
@@ -64,6 +68,47 @@ public class UserView {
 		}
 	}
 	public static void loginSuccessView(){
-
+		while (true) {
+			System.out.println(MyUtil.view("存钱", "取钱", "转账", "查看个人信息","返回上一层"));
+			String input=scanner.next();
+			if (input.equals("1")) {
+				System.out.println("请输入要存的钱数：");
+				double money=scanner.nextDouble();
+				if (userDAO.savaMoney(loginUserNo,money)){
+					System.out.println("存入成功");
+				}else {
+					System.out.println("存入失败，金额必须被100整除");
+				}
+			} else if (input.equals("2")) {
+				System.out.println("请输入要取的钱数：");
+				double money=scanner.nextDouble();
+				if (userDAO.getUserMoney(loginUserNo,money)){
+					System.out.println("取款成功");
+				}else {
+					System.out.println("取款失败");
+				}
+			} else if (input.equals("3")) {
+				System.out.println("请输入转账人名：");
+				String transTarget=scanner.next();
+				if (userDAO.nameCheck(transTarget)){
+					System.out.println("请输入转账金额：");
+					double money=scanner.nextDouble();
+					if (userDAO.transMoney(loginUserNo,money,transTarget)){
+						System.out.println("转账成功");
+					}else {
+						System.out.println("转账失败");
+					}
+				}else {
+					System.out.println("查无此人");
+				}
+			} else if (input.equals("4")) {
+				System.out.println(userDAO.queryUser(loginUserNo));
+			}else if (input.equals("5")) {
+				System.out.println("正在退出");
+				break;
+			} else {
+				System.out.println("您的输入有误");
+			}
+		}
 	}
 }
