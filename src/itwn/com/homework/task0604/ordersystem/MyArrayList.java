@@ -106,7 +106,7 @@ public class MyArrayList<E> {
     }
 
     // 从数组中删除index位置的元素, 返回删除的元素
-    public E remove(int index) {
+    public E remove(int index)  {
         if (index < 0 || index >= size) {
             throw new IllegalArgumentException("Remove failed. Index is illegal.");
         }

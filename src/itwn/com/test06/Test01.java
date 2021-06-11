@@ -1,29 +1,27 @@
 package itwn.com.test06;
 
-import java.util.Arrays;
-import java.util.Comparator;
+import java.util.Scanner;
 
 public class Test01 {
 	public static void main(String[] args) {
-		Integer[] nums = new Integer[50];
-		int[][] counts = new int[10][2];
-		for (int i=0;i<counts.length;i++){
-			counts[i][0]=i+90;
-		}
-		for (int i = 0; i < nums.length; i++) {
-			int rnum=(int) (Math.random() * 10) + 90;
-			nums[i] = rnum;
-			counts[rnum-90][1]+=1;
-		}
-		Arrays.sort(counts, new Comparator<int[]>() {
-			@Override
-			public int compare(int[] o1, int[] o2) {
-				return o1[1] == o2[1] ? Integer.compare(o1[0], o2[0]) : Integer.compare(o1[1], o2[1]);
+		Scanner scanner=new Scanner(System.in);
+		while (true) {
+
+			try {
+
+				sex(scanner.nextInt());
+				break;
+
+			} catch (SexException e) {
+				e.printStackTrace();
 			}
-		});
-		for (int[] a : counts) {
-			System.out.println(Arrays.toString(a));
+
 		}
 	}
-}
+	public static void sex(int sex) throws SexException {
+		if (sex>=18){
+			throw new SexException("lalala");
+		}
 
+	}
+}

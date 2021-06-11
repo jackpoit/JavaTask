@@ -1,7 +1,5 @@
 package itwn.com.homework.task0610.useraccount;
 
-import com.sun.org.apache.bcel.internal.generic.IF_ACMPEQ;
-
 import java.util.Scanner;
 
 public class UserView {
@@ -13,24 +11,14 @@ public class UserView {
 	}
 	public static void mainView(){
 		while (true) {
-			System.out.println(MyUtil.view("登录", "注册", "忘记密码", "查询用户", "退出系统"));
+			System.out.println(ATMUtil.view("登录", "注册", "忘记密码", "查询用户", "退出系统"));
 			String input=scanner.next();
 			if (input.equals("1")) {
 				loginView();
 			} else if (input.equals("2")) {
 				registerView();
 			} else if (input.equals("3")) {
-				String userNo=MyUtil.letterDepend(0);
-					if (userDAO.nameCheck(userNo)){
-						String userPass=MyUtil.letterDepend(1);
-						if (userDAO.modifyPass(userNo,userPass)){
-							System.out.println("修改成功");
-						}else {
-							System.out.println("不要输入原密码");
-						}
-					}else {
-						System.out.println("查无此人");
-					}
+				modify();
 			} else if (input.equals("4")) {
 					userDAO.queryAllUser();
 			}else if (input.equals("5")) {
@@ -42,34 +30,61 @@ public class UserView {
 		}
 	}
 	public static void loginView(){
-		String userNo=MyUtil.letterDepend(0);
-		String userPass=MyUtil.letterDepend(1);
-		if (MyUtil.rnums(4)){
-			int i=userDAO.login(userNo,userPass);
+		System.out.println("请输入用户名：");
+		String userNo= scanner.next();
+		System.out.println("请输入密码：");
+		String userPass= scanner.next();
+		int i=userDAO.login(userNo,userPass);
 			if (i==1){
 				System.out.println("账号密码正确");
 					loginUserNo=userNo;
 					loginSuccessView();
 			}else if (i==0){
 				System.out.println("密码错误");
+			}else if (i==-2){
+				System.out.println("用户冻结");
 			}else {
-				System.out.println("无此用户");
+				System.out.println("用户不存在");
 			}
-		}else {
-			System.out.println("验证码错误");
-		}
+
 	}
 	public static void registerView(){
-		String userNo=MyUtil.letterDepend(0);
-		if(userDAO.register(userNo)){
-			System.out.println("注册成功");
+		System.out.println("请输入用户名：");
+		String userNo= scanner.next();
+		System.out.println("请输入密码：");
+		String userPass= scanner.next();
+		try {
+			User user=new User(userNo,userPass);
+			if(userDAO.register(user)){
+				System.out.println("注册成功");
+			}else {
+				System.out.println("注册失败，用户名已注册");
+			}
+		} catch (IllegalInputException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	//
+	public static void modify(){
+		System.out.println("请输入用户名：");
+		String userNo= scanner.next();
+		if (userDAO.nameCheck(userNo)){
+			System.out.println("请输入密码：");
+			String userPass= scanner.next();
+			if (userDAO.modifyPass(userNo,userPass)){
+				System.out.println("修改成功");
+			}else {
+				System.out.println("修改失败");
+			}
 		}else {
-			System.out.println("注册失败，用户名已注册");
+			System.out.println("查无此人");
 		}
 	}
 	public static void loginSuccessView(){
 		while (true) {
-			System.out.println(MyUtil.view("存钱", "取钱", "转账", "查看个人信息","返回上一层"));
+			System.out.println(ATMUtil.view("存钱", "取钱", "转账", "查看个人信息","冻结账户","返回上一层"));
 			String input=scanner.next();
 			if (input.equals("1")) {
 				System.out.println("请输入要存的钱数：");
@@ -104,6 +119,9 @@ public class UserView {
 			} else if (input.equals("4")) {
 				System.out.println(userDAO.queryUser(loginUserNo));
 			}else if (input.equals("5")) {
+				userDAO.getMap().get(loginUserNo).setStatus(1);
+				System.out.println("冻结成功");
+			} else if (input.equals("6")) {
 				System.out.println("正在退出");
 				break;
 			} else {

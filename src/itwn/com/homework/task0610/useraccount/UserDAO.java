@@ -8,13 +8,31 @@ public class UserDAO {
 
 	public UserDAO() {
 		this.map = new LinkedHashMap<>();
+		try {
+			User user1=new User("jack","12345000001");
+			map.put(user1.getUserNo(),user1);
+		} catch (IllegalInputException e) {
+			e.printStackTrace();
+		}
+		try {
+			User user2=new User("rose","12345000002");
+			map.put(user2.getUserNo(),user2);
+		} catch (IllegalInputException e) {
+			e.printStackTrace();
+		}
+		try {
+			User user3=new User("tina","12345000000");
+			map.put(user3.getUserNo(),user3);
+		} catch (IllegalInputException e) {
+			e.printStackTrace();
+		}
 	}
 
 
 	//注册
-	public boolean register(String userNo){
-		if (!map.containsKey(userNo)) {
-			map.put(userNo, new User(userNo));
+	public boolean register(User user)  {
+		if (!map.containsKey(user.getUserNo())) {
+			map.put(user.getUserNo(), user);
 			return true;
 		}
 		return false;
@@ -23,23 +41,28 @@ public class UserDAO {
 	public int login(String userNo,String userPass){
 		if (!map.containsKey(userNo)){
 			return -1;
-		}else if (map.get(userNo).getUserPass().equals(userPass)){
-			return 1;
+		}else {
+			if (map.get(userNo).getStatus() == 1) {
+				return -2;
+			}
+			if (map.get(userNo).getUserPass().equals(userPass)) {
+				return 1;
+			}
 		}
 		return 0;
 	}
 	//查看
 	public void queryAllUser(){
 		Set<Map.Entry<String,User>> set=map.entrySet();
+		System.out.println("编号\t账号\t密码\t手机号\t\t\t金额\t状态");
 		for (Map.Entry<String,User> e:set){
-			String str="User{" +
-					"id=" + e.getValue().getId() +
-					", userNo='" + e.getValue().getUserNo() + '\'' +
-					", userName='" + e.getValue().getUserName() + '\'' +
-					", userPass='" + "******" + '\'' +
-					", userPhone='" + e.getValue().getUserPhone().substring(0,8)+"****" + '\'' +
-					", money=" + e.getValue().getMoney() +
-					'}'+"\n";
+			String str= e.getValue().getId() +"\t"+
+					 e.getValue().getUserNo() + "\t"+
+					 "******" + "\t" +
+					e.getValue().getUserPhone().substring(0,3)+"****"
+					+e.getValue().getUserPhone().substring(7,11)+ "\t\t" +
+					 e.getValue().getMoney() +"\t\t" +
+					 (e.getValue().getStatus()==0?"正常":"异常")+ "\n";
 			System.out.print(str);
 		}
 	}
@@ -55,12 +78,13 @@ public class UserDAO {
 	//修改密码
 	public boolean modifyPass(String userNo,String userPass) {
 		User temp=map.get(userNo);
-		if (temp.getUserPass().equals(userPass)){
+			try {
+				temp.setUserPass(userPass);
+				return true;
+			} catch (IllegalInputException e) {
+				System.out.println(e.getMessage());
+			}
 			return false;
-		}else {
-			temp.setUserPass(userPass);
-			return true;
-		}
 	}
 
 	//存钱
@@ -76,8 +100,7 @@ public class UserDAO {
 	//取钱
 	public boolean getUserMoney(String key,double money){
 		User temp=map.get(key);
-		double saved=temp.getMoney();
-		if (money%100==0&&money>0&&saved>=money){
+		if (money%100==0&&money>0&&temp.getMoney()>=money){
 			temp.setMoney(temp.getMoney()-money);
 			return true;
 		}else {

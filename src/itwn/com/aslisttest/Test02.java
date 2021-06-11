@@ -1,4 +1,4 @@
-package itwn.com.test06;
+package itwn.com.aslisttest;
 
 import java.util.*;
 

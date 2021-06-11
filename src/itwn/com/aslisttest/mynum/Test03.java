@@ -1,4 +1,4 @@
-package itwn.com.test06.mynum;
+package itwn.com.aslisttest.mynum;
 
 
 import java.util.LinkedHashMap;
