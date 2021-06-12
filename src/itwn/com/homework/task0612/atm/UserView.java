@@ -1,4 +1,4 @@
-package itwn.com.homework.task0610.useraccount;
+package itwn.com.homework.task0612.atm;
 
 import java.util.Scanner;
 

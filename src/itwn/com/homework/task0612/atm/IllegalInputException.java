@@ -1,4 +1,4 @@
-package itwn.com.homework.task0610.useraccount;
+package itwn.com.homework.task0612.atm;
 
 public class IllegalInputException extends Exception{
 	public IllegalInputException(String message){
