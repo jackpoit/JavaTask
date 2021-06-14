@@ -76,15 +76,10 @@ public class UserDAO {
 		return map.containsKey(userNo);
 	}
 	//修改密码
-	public boolean modifyPass(String userNo,String userPass) {
+	public void modifyPass(String userNo,String userPass) throws IllegalInputException {
 		User temp=map.get(userNo);
-			try {
-				temp.setUserPass(userPass);
-				return true;
-			} catch (IllegalInputException e) {
-				System.out.println(e.getMessage());
-			}
-			return false;
+		temp.setUserPass(userPass);
+
 	}
 
 	//存钱

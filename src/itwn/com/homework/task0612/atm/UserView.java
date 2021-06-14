@@ -73,10 +73,12 @@ public class UserView {
 		if (userDAO.nameCheck(userNo)){
 			System.out.println("请输入密码：");
 			String userPass= scanner.next();
-			if (userDAO.modifyPass(userNo,userPass)){
+			try {
+				userDAO.modifyPass(userNo,userPass);
 				System.out.println("修改成功");
-			}else {
+			} catch (IllegalInputException e) {
 				System.out.println("修改失败");
+				e.printStackTrace();
 			}
 		}else {
 			System.out.println("查无此人");
