@@ -1,4 +1,4 @@
-package itwn.com.fire01;
+package itwn.com.file01;
 
 import java.io.File;
 

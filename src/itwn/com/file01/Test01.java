@@ -1,4 +1,4 @@
-package itwn.com.fire01;
+package itwn.com.file01;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,5 +23,7 @@ public class Test01 {
 		}else {
 			System.out.println("已存在");
 		}
+
+		System.out.println(file.getName());
 	}
 }
