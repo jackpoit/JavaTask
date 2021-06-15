@@ -8,7 +8,6 @@ public class Test01 {
 		while (true) {
 
 			try {
-
 				sex(scanner.nextInt());
 				break;
 
