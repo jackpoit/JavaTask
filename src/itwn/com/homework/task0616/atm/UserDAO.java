@@ -1,39 +1,49 @@
 package itwn.com.homework.task0616.atm;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class UserDAO {
 	private LinkedHashMap<String, User> map;
+	{
+		File file=new File(ATMUtil.USER_PATH);
+		if (file.exists()&&file.length()!=0){
+			map=(LinkedHashMap<String, User>) ATMUtil.readObj();
 
-	public UserDAO() {
-		this.map = new LinkedHashMap<>();
-		try {
-			User user1=new User("jack","12345000001");
-			map.put(user1.getUserNo(),user1);
-		} catch (IllegalInputException e) {
-			e.printStackTrace();
-		}
-		try {
-			User user2=new User("rose","12345000002");
-			map.put(user2.getUserNo(),user2);
-		} catch (IllegalInputException e) {
-			e.printStackTrace();
-		}
-		try {
-			User user3=new User("tina","12345000000");
-			map.put(user3.getUserNo(),user3);
-		} catch (IllegalInputException e) {
-			e.printStackTrace();
+		}else {
+			this.map = new LinkedHashMap<>();
+			try {
+				User user1=new User("jack","12345000001");
+				map.put(user1.getUserNo(),user1);
+			} catch (IllegalInputException e) {
+				e.printStackTrace();
+			}
+			try {
+				User user2=new User("rose","12345000002");
+				map.put(user2.getUserNo(),user2);
+			} catch (IllegalInputException e) {
+				e.printStackTrace();
+			}
+			try {
+				User user3=new User("tina","12345000000");
+				map.put(user3.getUserNo(),user3);
+			} catch (IllegalInputException e) {
+				e.printStackTrace();
+			}
+			ATMUtil.writeObj(map);
 		}
 	}
+	public UserDAO() {}
 
 
 	//注册
 	public boolean register(User user)  {
 		if (!map.containsKey(user.getUserNo())) {
 			map.put(user.getUserNo(), user);
+			ATMUtil.writeObj(map);
 			return true;
 		}
 		return false;
@@ -55,7 +65,7 @@ public class UserDAO {
 	//查看
 	public void queryAllUser(){
 		Set<Map.Entry<String, User>> set=map.entrySet();
-		System.out.println("编号\t账号\t密码\t手机号\t\t\t金额\t状态");
+		System.out.println("编号\t\t账号\t\t密码\t\t手机号\t\t\t金额\t\t状态");
 		for (Map.Entry<String, User> e:set){
 			String str= e.getValue().getId() +"\t"+
 					 e.getValue().getUserNo() + "\t"+
@@ -88,6 +98,7 @@ public class UserDAO {
 		if (money%100==0&&money>0){
 			User temp=map.get(key);
 			temp.setMoney(temp.getMoney()+money);
+			ATMUtil.writeObj(map);
 			return true ;
 		}else {
 			return false;
@@ -98,6 +109,7 @@ public class UserDAO {
 		User temp=map.get(key);
 		if (money%100==0&&money>0&&temp.getMoney()>=money){
 			temp.setMoney(temp.getMoney()-money);
+			ATMUtil.writeObj(map);
 			return true;
 		}else {
 			return false;
@@ -119,6 +131,10 @@ public class UserDAO {
 
 	public void setMap(LinkedHashMap<String, User> map) {
 		this.map = map;
+	}
+	public void froze(String loginUserNo){
+		map.get(loginUserNo).setStatus(1);
+		ATMUtil.writeObj(map);
 	}
 
 

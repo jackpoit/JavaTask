@@ -51,7 +51,7 @@ public class UserView {
 	public static void registerView(){
 		System.out.println("请输入用户名：");
 		String userNo= scanner.next();
-		System.out.println("请输入密码：");
+		System.out.println("请输入手机号：");
 		String userPass= scanner.next();
 		try {
 			User user=new User(userNo,userPass);
@@ -121,7 +121,7 @@ public class UserView {
 			} else if (input.equals("4")) {
 				System.out.println(userDAO.queryUser(loginUserNo));
 			}else if (input.equals("5")) {
-				userDAO.getMap().get(loginUserNo).setStatus(1);
+					userDAO.froze(loginUserNo);
 				System.out.println("冻结成功");
 			} else if (input.equals("6")) {
 				System.out.println("正在退出");

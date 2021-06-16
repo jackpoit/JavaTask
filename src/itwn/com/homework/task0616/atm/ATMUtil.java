@@ -18,14 +18,27 @@ public class ATMUtil {
 		res+="******************\n请输入选项：";
 		return res;
 	}
-	public static Object readObj() throws IOException, ClassNotFoundException {
-		ObjectInputStream in =new ObjectInputStream(new FileInputStream(USER_PATH));
-		return in.readObject();
+	public static Object readObj() {
+		Object obj=null;
+		try {
+			ObjectInputStream in =new ObjectInputStream(new FileInputStream(USER_PATH));
+			obj=in.readObject();
+			in.close();
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+		}
+		return obj;
 	}
-	public static void writeObj(Object obj) throws IOException {
-		ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(USER_PATH));
-		out.writeObject(obj);
-		out.close();
+	public static void writeObj(Object obj)  {
+		ObjectOutputStream out= null;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(USER_PATH));
+			out.writeObject(obj);
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 
