@@ -1,6 +1,8 @@
-package itwn.com.homework.atm;
+package itwn.com.homework.task0616.atm;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 	private int id;
 	private String userNo;
 	private String userPass;
@@ -42,10 +44,10 @@ public class User {
 	}
 
 	public void setUserNo(String userNo) throws IllegalInputException {
-		if (userNo.matches(ATMUtil.strRegexs[0][1])) {
+		if (userNo.matches(ATMUtil.USER_NO_REGEX)) {
 			this.userNo = userNo;
 		}else {
-			throw new IllegalInputException(ATMUtil.strRegexs[0][2]);
+			throw new IllegalInputException("由3-6位的数字，字母组成，首位不能是数字");
 		}
 	}
 
@@ -54,10 +56,10 @@ public class User {
 	}
 
 	public void setUserPass(String userPass) throws IllegalInputException {
-		if (userPass.matches(ATMUtil.strRegexs[1][1])) {
+		if (userPass.matches(ATMUtil.USER_PASS_REGEX)) {
 			this.userPass = userPass;
 		}else {
-			throw new IllegalInputException(ATMUtil.strRegexs[1][2]);
+			throw new IllegalInputException("由6位数字组成");
 		}
 	}
 
@@ -66,10 +68,10 @@ public class User {
 	}
 
 	public void setUserPhone(String userPhone) throws IllegalInputException {
-		if (userPhone.matches(ATMUtil.strRegexs[2][1])) {
+		if (userPhone.matches(ATMUtil.USER_PHONE_REGEX)) {
 			this.userPhone = userPhone;
 		}else {
-			throw new IllegalInputException(ATMUtil.strRegexs[2][2]);
+			throw new IllegalInputException("首位是1 后面由10个数字组成");
 		}
 	}
 

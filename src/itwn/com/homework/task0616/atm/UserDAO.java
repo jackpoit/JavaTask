@@ -1,10 +1,11 @@
-package itwn.com.homework.atm;
+package itwn.com.homework.task0616.atm;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class UserDAO {
-	private LinkedHashMap<String,User> map;
+	private LinkedHashMap<String, User> map;
 
 	public UserDAO() {
 		this.map = new LinkedHashMap<>();
@@ -53,9 +54,9 @@ public class UserDAO {
 	}
 	//查看
 	public void queryAllUser(){
-		Set<Map.Entry<String,User>> set=map.entrySet();
+		Set<Map.Entry<String, User>> set=map.entrySet();
 		System.out.println("编号\t账号\t密码\t手机号\t\t\t金额\t状态");
-		for (Map.Entry<String,User> e:set){
+		for (Map.Entry<String, User> e:set){
 			String str= e.getValue().getId() +"\t"+
 					 e.getValue().getUserNo() + "\t"+
 					 "******" + "\t" +
