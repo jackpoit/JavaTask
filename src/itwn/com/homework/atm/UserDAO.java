@@ -1,4 +1,4 @@
-package itwn.com.homework.task0612.atm;
+package itwn.com.homework.atm;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;

@@ -3,170 +3,132 @@ package itwn.com.homework.atm;
 import java.util.Scanner;
 
 public class UserView {
-    private static Scanner sc=new Scanner(System.in);
-    private static UserDao userDao=new UserDao();
-    private static String loginUserName=null;
-    //private static User user=null;
-    //private static String
-    public static void main(String[] args) {
-        mainView();
-    }
-    //主界面
-    public static void mainView(){
-       while (true) {
-           System.out.println("--------------------");
-           System.out.println("1.登录");
-           System.out.println("2.注册");
-           System.out.println("3.修改密码");
-           System.out.println("4.查看所有用户信息");
-           System.out.println("5.退出登陆");
-           System.out.println("6.退出系统");
-           System.out.println("--------------------");
-           System.out.println("请输入选项:");
-           String mainInput=sc.next();
-           if (mainInput.equals("1")){
-                loginView();
-           }else if (mainInput.equals("2")){
-                registerView();
-           }else if (mainInput.equals("3")){
-                modifyPass();
-           }else if(mainInput.equals("4")){
-               System.out.println("正在查询所有用户信息");
-               userDao.quaryAllUser();
-           }else if(mainInput.equals("5")){
-               loginUserName=null;
-               break;
-           }else if(mainInput.equals("6")){
-               System.out.println("退出系统");
-               break;
-           }else {
-               System.out.println("您的输入有误");
-           }
-       }
+	private static Scanner scanner=new Scanner(System.in);
+	private static UserDAO userDAO=new UserDAO();
+	private static String loginUserNo;
+	public static void main(String[] args) {
+			mainView();
+	}
+	public static void mainView(){
+		while (true) {
+			System.out.println(ATMUtil.view("登录", "注册", "忘记密码", "查询用户", "退出系统"));
+			String input=scanner.next();
+			if (input.equals("1")) {
+				loginView();
+			} else if (input.equals("2")) {
+				registerView();
+			} else if (input.equals("3")) {
+				modify();
+			} else if (input.equals("4")) {
+					userDAO.queryAllUser();
+			}else if (input.equals("5")) {
+				System.out.println("正在退出");
+				System.exit(0);
+			} else {
+				System.out.println("您的输入有误");
+			}
+		}
+	}
+	public static void loginView(){
+		System.out.println("请输入用户名：");
+		String userNo= scanner.next();
+		System.out.println("请输入密码：");
+		String userPass= scanner.next();
+		int i=userDAO.login(userNo,userPass);
+			if (i==1){
+				System.out.println("账号密码正确");
+					loginUserNo=userNo;
+					loginSuccessView();
+			}else if (i==0){
+				System.out.println("密码错误");
+			}else if (i==-2){
+				System.out.println("用户冻结");
+			}else {
+				System.out.println("用户不存在");
+			}
 
-    }
+	}
+	public static void registerView(){
+		System.out.println("请输入用户名：");
+		String userNo= scanner.next();
+		System.out.println("请输入密码：");
+		String userPass= scanner.next();
+		try {
+			User user=new User(userNo,userPass);
+			if(userDAO.register(user)){
+				System.out.println("注册成功");
+			}else {
+				System.out.println("注册失败，用户名已注册");
+			}
+		} catch (IllegalInputException e) {
+			e.printStackTrace();
+		}
 
-    //登录界面
-    public static void loginView() {
-        System.out.println("请输入用户名：");
-        String name = sc.next();
-        User loginUser = userDao.nameCheck(name);
-        if (loginUser != null) {
-            System.out.println("用户名正确");
-            System.out.println("请输入密码：");
-            String pass = sc.next();
-            if (loginUser.getUserPass().equals(pass)) {
-                System.out.println("密码正确,正在登陆");
-                loginUserName=name;
-                //跳到loginSuccessView
-                loginSuccessView();
-            }else {
-                System.out.println("密码错误，请重新登录");
-            }
-        }else {
-            System.out.println("用户名未注册");
-            }
-        }
-    //注册界面
-    public static void registerView(){
-        System.out.println("请输入用户名：");
-        String userName=sc.next();
-        System.out.println("请输入密码：");
-        String userPass=sc.next();
-        System.out.println("请输入手机号：");
-        String userPhone=sc.next();
-        System.out.println("请输入要存的钱数：");
-        double money=sc.nextDouble();
-        User regisUser=new User(userName,userPass,userPhone,money);
-        if(userDao.register(regisUser)==1){
-            System.out.println("注册成功");
-        }else {
-            System.out.println("该用户名已被注册");
-        }
-    }
-    //修改密码
-    public static void modifyPass(){
-        System.out.println("请输入要修改的用户名：");
-        String name=sc.next();
-        User temp=userDao.nameCheck(name);
-        if(temp==null){
-            System.out.println("没有该用户");
-        }else {
-            System.out.println("请输入原密码：");
-            String oldPass=sc.next();
-            if (oldPass.equals(temp.getUserPass())){
-                System.out.println("请输入要修改的密码：");
-                String newPass=sc.next();
-                if (newPass.equals(oldPass)){
-                    System.out.println("请不要输入原密码");
-                } else {
-                    userDao.modify(newPass,temp);
-                    System.out.println("修改密码成功");
-                }
-            }else {
-                System.out.println("抱歉，原密码错误");
-            }
-        }
-    }
-    //登录成功界面
-    public static void loginSuccessView(){
-        while (true) {
-            System.out.println("--------------------");
-            System.out.println("欢迎您，"+loginUserName);
-            System.out.println("1.取钱");
-            System.out.println("2.存钱");
-            System.out.println("3.转账");
-            System.out.println("4.查看个人信息");
-            System.out.println("5.返回上一层");
-            System.out.println("--------------------");
-            System.out.println("请输入选项:");
-            String mainInput=sc.next();
-            if (mainInput.equals("1")){
-                getMoney();
-            }else if (mainInput.equals("2")){
-                saveMoney();
-            }else if (mainInput.equals("3")){
-                transform();
-            }else if(mainInput.equals("4")){
-                System.out.println(userDao.nameCheck(loginUserName));
-            }else if(mainInput.equals("5")){
-                System.out.println("正在返回上一层");
-                break;
-            }else {
-                System.out.println("您的输入有误");
-            }
-        }
-    }
-    //取钱
-    public static void getMoney(){
-        System.out.println("请输入要取出的金额：");
-        double getMoney=sc.nextDouble();
-        userDao.getMoney(getMoney,loginUserName);
-        System.out.println("您的剩余金额为："+userDao.nameCheck(loginUserName).getMoney());
-    }
-    //存钱
-    public static void saveMoney(){
-        System.out.println("请输入要存入的金额：");
-        double saveMoney=sc.nextDouble();
-        userDao.saveMoney(saveMoney,loginUserName);
-        System.out.println("您的剩余金额为："+userDao.nameCheck(loginUserName).getMoney());
-    }
-    //转账
-    public static void transform(){
-        System.out.println("请输入收款者用户名：");
-        String transName = sc.next();
-        if (transName.equals(loginUserName)){
-            System.out.println("请不要输入您自己的用户名");
-        }else {
-            User transUser = userDao.nameCheck(transName);
-            if (transUser != null) {
-                System.out.println("请输入要转账的金额：");
-                double transMoney = sc.nextDouble();
-                userDao.transMoney(transMoney, loginUserName, transName);
-                System.out.println("您的剩余金额为：" + userDao.nameCheck(loginUserName).getMoney());
-            } else {
-                System.out.println("该用户不存在");
-            }
-        }
-    }
+	}
+
+	//
+	public static void modify(){
+		System.out.println("请输入用户名：");
+		String userNo= scanner.next();
+		if (userDAO.nameCheck(userNo)){
+			System.out.println("请输入密码：");
+			String userPass= scanner.next();
+			try {
+				userDAO.modifyPass(userNo,userPass);
+				System.out.println("修改成功");
+			} catch (IllegalInputException e) {
+				System.out.println("修改失败");
+				e.printStackTrace();
+			}
+		}else {
+			System.out.println("查无此人");
+		}
+	}
+	public static void loginSuccessView(){
+		while (true) {
+			System.out.println(ATMUtil.view("存钱", "取钱", "转账", "查看个人信息","冻结账户","返回上一层"));
+			String input=scanner.next();
+			if (input.equals("1")) {
+				System.out.println("请输入要存的钱数：");
+				double money=scanner.nextDouble();
+				if (userDAO.savaMoney(loginUserNo,money)){
+					System.out.println("存入成功");
+				}else {
+					System.out.println("存入失败，金额必须被100整除");
+				}
+			} else if (input.equals("2")) {
+				System.out.println("请输入要取的钱数：");
+				double money=scanner.nextDouble();
+				if (userDAO.getUserMoney(loginUserNo,money)){
+					System.out.println("取款成功");
+				}else {
+					System.out.println("取款失败");
+				}
+			} else if (input.equals("3")) {
+				System.out.println("请输入转账人名：");
+				String transTarget=scanner.next();
+				if (userDAO.nameCheck(transTarget)){
+					System.out.println("请输入转账金额：");
+					double money=scanner.nextDouble();
+					if (userDAO.transMoney(loginUserNo,money,transTarget)){
+						System.out.println("转账成功");
+					}else {
+						System.out.println("转账失败");
+					}
+				}else {
+					System.out.println("查无此人");
+				}
+			} else if (input.equals("4")) {
+				System.out.println(userDAO.queryUser(loginUserNo));
+			}else if (input.equals("5")) {
+				userDAO.getMap().get(loginUserNo).setStatus(1);
+				System.out.println("冻结成功");
+			} else if (input.equals("6")) {
+				System.out.println("正在退出");
+				break;
+			} else {
+				System.out.println("您的输入有误");
+			}
+		}
+	}
 }

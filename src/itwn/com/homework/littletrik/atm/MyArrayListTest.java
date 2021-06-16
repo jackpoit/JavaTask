@@ -1,4 +1,4 @@
-package itwn.com.homework.atm;
+package itwn.com.homework.littletrik.atm;
 
 
 class MyArrayListTest {

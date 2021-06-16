@@ -1,4 +1,4 @@
-package itwn.com.homework.atm;
+package itwn.com.homework.littletrik.atm;
 
 public class UserDao {
     private MyArrayList list=new MyArrayList();

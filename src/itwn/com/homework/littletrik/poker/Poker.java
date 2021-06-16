@@ -1,4 +1,4 @@
-package itwn.com.homework.task0530.poker;
+package itwn.com.homework.littletrik.poker;
 
 public class Poker {
     private int id;

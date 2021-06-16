@@ -1,4 +1,4 @@
-package itwn.com.homework.teachersystem;
+package itwn.com.homework.littletrik.teachersystem;
 
 import java.util.Scanner;
 

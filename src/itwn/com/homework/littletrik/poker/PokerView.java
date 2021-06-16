@@ -1,4 +1,4 @@
-package itwn.com.homework.task0530.poker;
+package itwn.com.homework.littletrik.poker;
 
 import java.util.Scanner;
 

@@ -10,7 +10,7 @@ public class Task03 {
 //		(.jpg,.png,.jpeg)
 		Scanner scanner=new Scanner(System.in);
 		File file=new File("C:\\JavaProgram\\FileTest\\images");
-		String towardsPath="C:\\JavaProgram\\FileTest\\towards\\";
+		String towardsPath="\\\\192.168.5.69\\42\\images/";
 		int index=1;
 		File[] fs=file.listFiles();
 		for (File file1:fs){
@@ -22,13 +22,13 @@ public class Task03 {
 			System.out.println("选择一个：(5退出）");
 			String input = scanner.next();
 			if (input.equals("1")) {
-				upLode(fs[1].getAbsoluteFile(),towardsPath);
+				upLode(fs[1].getAbsolutePath(),towardsPath);
 			} else if (input.equals("2")) {
-				upLode(fs[2].getAbsoluteFile(),towardsPath);
+				upLode(fs[2].getAbsolutePath(),towardsPath);
 			} else if (input.equals("3")) {
-				upLode(fs[3].getAbsoluteFile(),towardsPath);
+				upLode(fs[3].getAbsolutePath(),towardsPath);
 			} else if (input.equals("4")) {
-				upLode(fs[4].getAbsoluteFile(),towardsPath);
+				upLode(fs[4].getAbsolutePath(),towardsPath);
 			} else if (input.equals("5")) {
 					break;
 			} else{
@@ -38,11 +38,10 @@ public class Task03 {
 
 	}
 
-	public static void upLode(File file,String towards) throws IOException {
-		String path = file.getName();
-		if (path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png")) {
-			InputStream in = new FileInputStream(file);
-			OutputStream out = new FileOutputStream(towards+"(newUpload)"+path);
+	public static void upLode(String fromPath,String towards) throws IOException {
+		if (fromPath.endsWith(".jpg") || fromPath.endsWith(".jpeg") || fromPath.endsWith(".png")) {
+			InputStream in = new FileInputStream(fromPath);
+			OutputStream out = new FileOutputStream(towards+"(newUpload)"+new File(fromPath).getName(),true);
 			byte[] bs = new byte[1024];
 			int temp = -1;
 			while ((temp = in.read(bs)) != -1) {

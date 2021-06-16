@@ -1,5 +1,4 @@
-package itwn.com.homework.teachersystem;
-
+package itwn.com.homework.littletrik.atm;
 
 public class MyArrayList {
     private Object[] objs=new Object[10];
@@ -10,15 +9,15 @@ public class MyArrayList {
      * @param obj 新元素
      * */
     public void add(Object obj){
-        if(size==objs.length){
-            Object[] newArr=new Object[size+(size>>1)];
-            for (int i=0;i<size;i++){
-                newArr[i]=objs[i];
+            if(size==objs.length){
+                Object[] newArr=new Object[size+(size>>1)];
+                for (int i=0;i<size-1;i++){
+                    newArr[i]=objs[i];
+                }
+                objs=newArr;
             }
-            objs=newArr;
-        }
         objs[size]=obj;
-        size++;
+            size++;
     }
 
     /**
@@ -52,15 +51,6 @@ public class MyArrayList {
      * */
     public int size(){
         return size;
-    }
-
-    /**
-     * 交换元素的位置
-     * */
-    public void swap(int i,int j) {
-        Object temp=objs[i];
-        objs[i]=objs[j];
-        objs[j]=temp;
     }
 
     @Override
