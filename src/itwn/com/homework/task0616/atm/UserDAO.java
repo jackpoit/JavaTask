@@ -65,7 +65,7 @@ public class UserDAO {
 	//查看
 	public void queryAllUser(){
 		Set<Map.Entry<String, User>> set=map.entrySet();
-		System.out.println("编号\t\t账号\t\t密码\t\t手机号\t\t\t金额\t\t状态");
+		System.out.println("编号\t账号\t密码\t手机号\t\t\t金额\t状态");
 		for (Map.Entry<String, User> e:set){
 			String str= e.getValue().getId() +"\t"+
 					 e.getValue().getUserNo() + "\t"+
@@ -90,6 +90,7 @@ public class UserDAO {
 	public void modifyPass(String userNo,String userPass) throws IllegalInputException {
 		User temp=map.get(userNo);
 		temp.setUserPass(userPass);
+		ATMUtil.writeObj(map);
 
 	}
 
@@ -117,20 +118,14 @@ public class UserDAO {
 	}
 	//转账
 	public boolean transMoney(String key,double money,String transUser){
+		if (map.get(transUser).getStatus()==1){
+			return false;
+		}
 		if (getUserMoney(key,money)){
 			savaMoney(transUser,money);
 			return true;
 		}
 		return false;
-	}
-
-
-	public LinkedHashMap<String, User> getMap() {
-		return map;
-	}
-
-	public void setMap(LinkedHashMap<String, User> map) {
-		this.map = map;
 	}
 	public void froze(String loginUserNo){
 		map.get(loginUserNo).setStatus(1);

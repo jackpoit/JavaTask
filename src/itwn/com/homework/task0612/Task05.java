@@ -1,10 +1,7 @@
 package itwn.com.homework.task0612;
 
-import itwn.com.aslisttest.mynum.MyNum;
-
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.TreeSet;
 
 public class Task05 {
 //    编写一个应用程序，设有字符串"yekmaakkccekymbvb",求出该字 符串中有多少种字符,以及每个字符的个数?
