@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -22,8 +23,8 @@ public class Main extends Application {
 	private final static int MAIN_VIEW_WIDTH =700;
 	private final static int MAIN_VIEW_HEITHGT=800;
 	private final static int GRID_SIZE=40;
-	private static boolean depend=false;
-	private final static String path="file/chess.txt";
+	private static boolean gameOvberDepend=false;
+	private final static String PATH ="file/chess.txt";
 	private static Color color=Color.BLACK;
 	private LinkedList<Chess> list = new LinkedList<>();
 	public static void main(String[] args) {
@@ -65,16 +66,54 @@ public class Main extends Application {
 				button.setOnMouseClicked(event -> regret(pane));
 			}else if ("存档".equals(button.getText())){
 				button.setOnMouseClicked(event -> {
-					writeObj(list);
-					Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-					alert.setTitle("存档");
-					alert.setContentText("正在存档。。。。。");
-					alert.showAndWait();
+					if (list.isEmpty()){
+						Alert alert=new Alert(Alert.AlertType.INFORMATION);
+						alert.setTitle("警告");
+						alert.setContentText("棋盘棋子数量为空！");
+						alert.showAndWait();
+					}else {
+						Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+						alert.setTitle("提示信息");
+						alert.setContentText("确定要存档吗?");
+						Optional<ButtonType> btn=alert.showAndWait();
+						if (btn.get()==ButtonType.OK) {
+							writeObj(list);
+							Alert alert1=new Alert(Alert.AlertType.INFORMATION);
+							alert1.setTitle("存档");
+							alert1.setContentText("存档成功");
+							alert1.showAndWait();
+						}
+
+					}
 				});
 			}else if ("读档".equals(button.getText())){
-				button.setOnMouseClicked(event -> readChess(pane));
+				button.setOnMouseClicked(event -> {
+					if (new File(PATH).exists()) {
+						Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+						alert.setTitle("提示信息");
+						alert.setContentText("确定要读档吗?");
+						Optional<ButtonType> btn=alert.showAndWait();
+						if (btn.get()==ButtonType.OK) {
+							readChess(pane);
+						}
+					}else {
+						Alert alert=new Alert(Alert.AlertType.INFORMATION);
+						alert.setTitle("警告");
+						alert.setContentText("无可读取存档");
+						alert.showAndWait();
+					}
+
+				});
 			}else if ("退出".equals(button.getText())){
-				button.setOnMouseClicked(event -> System.exit(0));
+				button.setOnMouseClicked(event ->{
+					Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+					alert.setTitle("提示信息");
+					alert.setContentText("确定要退出吗?");
+					Optional<ButtonType> btn=alert.showAndWait();
+					if (btn.get()==ButtonType.OK) {
+						System.exit(0);
+					}
+				} );
 			}
 		}
 
@@ -85,33 +124,45 @@ public class Main extends Application {
 		//下棋
 
         pane.setOnMouseClicked(event -> {
-            double clickX=event.getX();
-            double clickY=event.getY();
-            int x=(int)(Math.round((clickX-50)/GRID_SIZE)*GRID_SIZE)+50;
-            int y=(int)(Math.round((clickY-50)/GRID_SIZE)*GRID_SIZE)+50;
-			if (!depend&&x>=50&&y>=50&&x<=650&&y<=650&&isChessExist(x,y)) {
-				Chess chess= new Chess(x, y, color == Color.BLACK ? 0 : 1);
-				list.add(chess);
-				Circle circle = new Circle(x, y, 20, color);
-				pane.getChildren().add(circle);
-				if (isWin(chess)){
-					depend=true;
-					Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
-					alert.setTitle("消息提示");
-					alert.setContentText("游戏结束！"+(color==Color.BLACK?"黑棋赢":"白棋赢")+"win");
-					alert.showAndWait();
+        	if (gameOvberDepend){
+				Alert alert = new Alert(Alert.AlertType.INFORMATION);
+				alert.setTitle("消息提示");
+				alert.setContentText("游戏已经结束！无法落子");
+				alert.showAndWait();
+			}else {
+				double clickX = event.getX();
+				double clickY = event.getY();
+				int x = (int) (Math.round((clickX - 50) / GRID_SIZE) * GRID_SIZE) + 50;
+				int y = (int) (Math.round((clickY - 50) / GRID_SIZE) * GRID_SIZE) + 50;
+				if (x >= 50 && y >= 50 && x <= 650 && y <= 650 && isChessExist(x, y)) {
+					Chess chess = new Chess(x, y, color == Color.BLACK ? 0 : 1);
+					list.add(chess);
+					Circle circle = new Circle(x, y, 20, color);
+					pane.getChildren().add(circle);
+					if (isWin(chess)) {
+						gameOvberDepend = true;
+						Alert alert = new Alert(Alert.AlertType.INFORMATION);
+						alert.setTitle("消息提示");
+						alert.setContentText("游戏结束！" + (color == Color.BLACK ? "黑棋赢" : "白棋赢") + "win");
+						alert.showAndWait();
+					}
+					color = color == Color.BLACK ? Color.WHITE : Color.BLACK;
 				}
-				color=color==Color.BLACK?Color.WHITE:Color.BLACK;
-					//-----------------------------------------------------------
-
-				}
-        });
-
+			}
+       	 });
 	}
+
 	//
+	public void restart(Pane pane){
+		gameOvberDepend=false;
+		color=Color.BLACK;
+		ObservableList<Node> node = pane.getChildren();
+		node.remove(node.size()- list.size(), node.size());
+		list.clear();
+	}
 	public void regret(Pane pane){
 		if (list.isEmpty()){
-			Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+			Alert alert=new Alert(Alert.AlertType.INFORMATION);
 			alert.setTitle("警告");
 			alert.setContentText("棋盘棋子数量为空！");
 			alert.showAndWait();
@@ -119,6 +170,7 @@ public class Main extends Application {
 			ObservableList<Node> node = pane.getChildren();
 			node.remove(node.size() - 1);
 			list.removeLast();
+			color = color == Color.BLACK ? Color.WHITE : Color.BLACK;
 		}
 	}
 	public boolean isChessExist(int x,int y){
@@ -133,13 +185,11 @@ public class Main extends Application {
 	public boolean isWin(Chess nowChess){
 		int[]dx = {-1,-1,-1,0};
 		int[]dy = {0,-1,1,1};
-		int x=nowChess.getX();
-		int y=nowChess.getY();
 		int color=nowChess.getColor();
 		for (int i=0;i<4;i++){
 			int count=1;
-			int fx = x ;
-			int fy = y ;
+			int fx = nowChess.getX();
+			int fy = nowChess.getY();
 			while (fx<=650&&fy<=650&&fx>=50&&fy>=50){
 				int step = 1;
 				fx += dx[i] * GRID_SIZE * step;
@@ -151,8 +201,8 @@ public class Main extends Application {
 				}
 				step++;
 			}
-			 fx = x ;
-			 fy = y ;
+			 fx =  nowChess.getX();
+			 fy =  nowChess.getY();
 			while (fx<=650&&fy<=650&&fx>=50&&fy>=50){
 				int step = -1;
 				fx += dx[i] * GRID_SIZE * step;
@@ -171,9 +221,9 @@ public class Main extends Application {
 		return false;
 	}
 
-	public void writeObj(Object obj)  {
+	public void writeObj(Object obj) {
 		try {
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path));
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(PATH));
 			out.writeObject(obj);
 			out.close();
 		} catch (IOException e) {
@@ -183,26 +233,25 @@ public class Main extends Application {
 	}
 	public void readChess(Pane pane){
 		try {
-			ObjectInputStream in=new ObjectInputStream(new FileInputStream(path));
+			ObjectInputStream in=new ObjectInputStream(new FileInputStream(PATH));
 			LinkedList<Chess> temp=(LinkedList<Chess>) in.readObject();
 			in.close();
+			restart(pane);
 			while (!temp.isEmpty()){
-				Chess chess=temp.removeLast();
+				Chess chess=temp.removeFirst();
 				list.add(chess);
 				Circle circle = new Circle(chess.getX(), chess.getY(), 20, chess.getColor()==0?Color.BLACK:Color.WHITE);
 				pane.getChildren().add(circle);
+			}
+			color=list.getLast().getColor()==0?Color.WHITE:Color.BLACK;
+			if (isWin(list.getLast())){
+				gameOvberDepend=true;
 			}
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-	public void restart(Pane pane){
 
-			ObservableList<Node> node = pane.getChildren();
-			node.remove(node.size()- list.size(), node.size());
-			list.clear();
-
-	}
 	static class Chess implements Serializable {
 		public int x;
 		public int y;
