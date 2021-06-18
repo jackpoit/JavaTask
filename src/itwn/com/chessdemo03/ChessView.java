@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -33,19 +34,21 @@ public class ChessView extends Stage {
 	public ChessView() {
 		Pane pane=new Pane();
 		Scene scene=new Scene(pane, MAIN_VIEW_WIDTH,MAIN_VIEW_HEITHGT);
-		pane.setBackground(new Background(new BackgroundFill(Color.rgb(244,202,119),null,null)));
-//		Image img0 = new Image("file:C:\\JavaProgram\\JavaTask\\file/1.jpg",700,700,false,false);
-//		ImageView imageView=new ImageView();
-//		imageView.setImage(img0);
-//		pane.getChildren().add(imageView);
+//		pane.setBackground(new Background(new BackgroundFill(Color.rgb(244,202,119),null,null)));
+		Image img0 = new Image("file:file/3.jpg",700,800,false,false);
+		ImageView imageView=new ImageView();
+		imageView.setImage(img0);
+		pane.getChildren().add(imageView);
 		//绘制棋盘
 		{
 			for (int x = 50, y = 50; x <= 650; x += GRID_SIZE) {
 				Line line = new Line(x, y, x, y + 600);
+				line.setStroke(Color.rgb(0,245,255));
 				pane.getChildren().add(line);
 			}
 			for (int x = 50, y = 50; y <= 650; y += GRID_SIZE) {
 				Line line = new Line(x, y, x + 600, y);
+				line.setStroke(Color.rgb(0,245,255));
 				pane.getChildren().add(line);
 			}
 		}
@@ -124,8 +127,8 @@ public class ChessView extends Stage {
 		this.setTitle("五子棋");
 		this.show();
 		//下棋
-		Image img1 = new Image("file:C:\\JavaProgram\\JavaTask\\file/1.jpg");
-		Image img2 = new Image("file:C:\\JavaProgram\\JavaTask\\file/2.jpg");
+		Image img1 = new Image("file:file/1.jpg");
+		Image img2 = new Image("file:file/2.jpg");
 
 		pane.setOnMouseClicked(event -> {
 			if (gameOverDepend){

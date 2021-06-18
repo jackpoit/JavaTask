@@ -7,10 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,6 +29,7 @@ public class LoginView extends Stage {
 	private LoginView(){
 		GridPane root=new GridPane();
 		root.setBackground(new Background(new BackgroundFill(Color.PLUM,null,null)));
+
 		Label userLabel=new Label("用户名:");
 		TextField userText=new TextField();
 		JavaFXUtil.createGridNode(userLabel,80,40,20);
