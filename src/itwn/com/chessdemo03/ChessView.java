@@ -1,6 +1,5 @@
-package itwn.com.chessdemo1;
+package itwn.com.chessdemo03;
 
-import javafx.application.Application;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -8,7 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
@@ -20,30 +18,27 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.Optional;
 
-public class Main extends Application {
+public class ChessView extends Stage {
 	private final static int MAIN_VIEW_WIDTH =700;
 	private final static int MAIN_VIEW_HEITHGT=800;
 	private final static int GRID_SIZE=40;
-	private static boolean gameOvberDepend=false;
+	private static boolean gameOverDepend =false;
 	private final static String PATH ="file/chess.txt";
 	private static Color color=Color.BLACK;
 	private LinkedList<Chess> list = new LinkedList<>();
-	public static void main(String[] args) {
-		launch(args);
-	}
 
-	@Override
-	public void start(Stage primaryStage) {
-        Pane pane=new Pane();
+	public ChessView() {
+		Pane pane=new Pane();
 		Scene scene=new Scene(pane, MAIN_VIEW_WIDTH,MAIN_VIEW_HEITHGT);
-        pane.setBackground(new Background(new BackgroundFill(Color.rgb(244,202,119),null,null)));
+		pane.setBackground(new Background(new BackgroundFill(Color.rgb(244,202,119),null,null)));
 //		Image img0 = new Image("file:C:\\JavaProgram\\JavaTask\\file/1.jpg",700,700,false,false);
 //		ImageView imageView=new ImageView();
 //		imageView.setImage(img0);
 //		pane.getChildren().add(imageView);
-        //绘制棋盘
+		//绘制棋盘
 		{
 			for (int x = 50, y = 50; x <= 650; x += GRID_SIZE) {
 				Line line = new Line(x, y, x, y + 600);
@@ -54,9 +49,9 @@ public class Main extends Application {
 				pane.getChildren().add(line);
 			}
 		}
-        //绘制按钮
-        String[] titles={"重新开始","悔棋","存档","读档","退出"};
-        for (int i=0;i<titles.length;i++) {
+		//绘制按钮
+		String[] titles={"重新开始","悔棋","存档","读档","退出"};
+		for (int i=0;i<titles.length;i++) {
 			Button button=new Button(titles[i]);
 			button.setPrefSize(100,40);
 			button.setFont(new Font(15));
@@ -124,16 +119,16 @@ public class Main extends Application {
 			}
 		}
 
-        primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
-        primaryStage.setTitle("五子棋");
-        primaryStage.show();
+		this.setScene(scene);
+		this.setResizable(false);
+		this.setTitle("五子棋");
+		this.show();
 		//下棋
 		Image img1 = new Image("file:C:\\JavaProgram\\JavaTask\\file/1.jpg");
 		Image img2 = new Image("file:C:\\JavaProgram\\JavaTask\\file/2.jpg");
 
-        pane.setOnMouseClicked(event -> {
-        	if (gameOvberDepend){
+		pane.setOnMouseClicked(event -> {
+			if (gameOverDepend){
 				Alert alert = new Alert(Alert.AlertType.INFORMATION);
 				alert.setTitle("消息提示");
 				alert.setContentText("游戏已经结束！无法落子");
@@ -149,7 +144,7 @@ public class Main extends Application {
 					Circle circle = new Circle(x, y, 20, color == Color.BLACK ? new ImagePattern(img1) :new ImagePattern(img2));
 					pane.getChildren().add(circle);
 					if (isWin(chess)) {
-						gameOvberDepend = true;
+						gameOverDepend = true;
 						Alert alert = new Alert(Alert.AlertType.INFORMATION);
 						alert.setTitle("消息提示");
 						alert.setContentText("游戏结束！" + (color == Color.BLACK ? "黑棋赢" : "白棋赢") + "win");
@@ -158,12 +153,12 @@ public class Main extends Application {
 					color = color == Color.BLACK ? Color.WHITE : Color.BLACK;
 				}
 			}
-       	 });
+		});
 	}
 
 	//
 	public void restart(Pane pane){
-		gameOvberDepend=false;
+		gameOverDepend =false;
 		color=Color.BLACK;
 		ObservableList<Node> node = pane.getChildren();
 		node.remove(node.size()- list.size(), node.size());
@@ -210,8 +205,8 @@ public class Main extends Application {
 				}
 				step++;
 			}
-			 fx =  nowChess.getX();
-			 fy =  nowChess.getY();
+			fx =  nowChess.getX();
+			fy =  nowChess.getY();
 			while (fx<=650&&fy<=650&&fx>=50&&fy>=50){
 				int step = -1;
 				fx += dx[i] * GRID_SIZE * step;
@@ -254,7 +249,7 @@ public class Main extends Application {
 			}
 			color=list.getLast().getColor()==0?Color.WHITE:Color.BLACK;
 			if (isWin(list.getLast())){
-				gameOvberDepend=true;
+				gameOverDepend =true;
 			}
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
@@ -319,3 +314,4 @@ public class Main extends Application {
 		}
 	}
 }
+
