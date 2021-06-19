@@ -22,7 +22,4 @@ public class Task03 {
 				e.printStackTrace();
 			}
 		}
-
-
-
 	}

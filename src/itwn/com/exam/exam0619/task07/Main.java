@@ -1,14 +1,12 @@
-package itwn.com.exam.exam0619;
+package itwn.com.exam.exam0619.task07;
 
 import java.util.Scanner;
 
-public class Task07 {
+public class Main {
 	private static Scanner scanner=new Scanner(System.in);
 	private static BookDAO bookDAO=new BookDAO();
 	public static void main(String[] args) {
-	  mainView();
-
-
+	  		mainView();
 	}
 	public static void mainView(){
 		while (true){
@@ -30,10 +28,9 @@ public class Task07 {
 			}else if("4".equals(input)){
 				System.out.println("请输入书名：");
 				String name=scanner.next();
-				System.out.println("查询到下列书名：");
+				System.out.println("查询到下列书：");
 				String str=bookDAO.check(name);
 				System.out.println(str);
-
 			}else if("5".equals(input)){
 				System.exit(0);
 			}else{
@@ -48,16 +45,14 @@ public class Task07 {
 		String author=scanner.next();
 		System.out.println("请输入价格：");
 		double price=scanner.nextDouble();
-
 		Book book=new Book(name,author,price);
-
 		if (bookDAO.add(book)){
 			System.out.println("添加成功");
 		}else {
 			System.out.println("添加失败");
 		}
-
 	}
+
 	public static void delBook(){
 		System.out.println("请输入书名：");
 		String name=scanner.next();
@@ -67,7 +62,6 @@ public class Task07 {
 		}else {
 			System.out.println("删除失败");
 		}
-
 	}
 
 }

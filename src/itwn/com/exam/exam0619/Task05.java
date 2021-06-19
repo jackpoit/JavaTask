@@ -6,29 +6,34 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Task05 {
-	private static List<Poker> totalList=new LinkedList<>();
-	private static List<Poker> user1List=new LinkedList<>();
+	private static List<Poker> totalList=new LinkedList<>();//总牌
+	private static List<Poker> user1List=new LinkedList<>();//1-4号玩家
 	private static List<Poker> user2List=new LinkedList<>();
 	private static List<Poker> user3List=new LinkedList<>();
 	private static List<Poker> user4List=new LinkedList<>();
 
 	public static void main(String[] args) {
 //		要求实现将2副牌发给4个人，尽可能公平？ （15分）
-//<1>.成功创建2副牌
+//				<1>.成功创建2副牌
 //				<2>.洗牌
 //				<3>.发牌
 //				<4>.验牌
 //				<5>.对4个人手里的牌进行排序
+
+
+		//创建2副牌
 		createPoker();
 		createPoker();
 		System.out.println(totalList+""+totalList.size());
 
+		//洗牌
 		int opCount=1000;//洗牌次数
 		for (int i=0;i<opCount;i++){
 			Collections.shuffle(totalList);
 		}
 		System.out.println(totalList+""+totalList.size());
 
+		//发牌
 		for (int i=0;i<totalList.size();i++){
 			if (i%4==0){
 				user1List.add(totalList.get(i));
@@ -45,6 +50,7 @@ public class Task05 {
 		System.out.println("user3:\n"+user3List+user3List.size());
 		System.out.println("user4:\n"+user4List+user4List.size());
 
+		//排序
 		Comparator<Poker> comparator=new Comparator<Poker>() {
 			@Override
 			public int compare(Poker o1, Poker o2) {

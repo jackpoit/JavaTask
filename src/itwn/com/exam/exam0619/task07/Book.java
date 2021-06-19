@@ -1,8 +1,6 @@
-package itwn.com.exam.exam0619;
+package itwn.com.exam.exam0619.task07;
 
 import java.io.*;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class Book implements Serializable{
 
@@ -11,31 +9,30 @@ public class Book implements Serializable{
 	private String author;
 	private double price;
 	private static int count;
-	private static String path="file/count.txt";
+	private final static String PATH ="file/count.txt";
 		{
-		if (new File(path).exists()){
+		if (new File(PATH).exists()){
 			count=read();
 		}else {
 			count=1;
 			write();
 		}
 	}
-
+	//把count写入文件
 	public void write(){
 		try {
-			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(path));
+			ObjectOutputStream out=new ObjectOutputStream(new FileOutputStream(PATH));
 			out.writeObject(count);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
-
+	//从文件中读count
 	public Integer read() {
 		Integer res;
 		try {
-			ObjectInputStream in= new ObjectInputStream(new FileInputStream(path));
+			ObjectInputStream in= new ObjectInputStream(new FileInputStream(PATH));
 			res= (Integer) in.readObject();
 			in.close();
 			return res;

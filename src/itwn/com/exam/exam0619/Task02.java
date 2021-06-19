@@ -14,6 +14,5 @@ public class Task02 {
 		for (String s:list){
 			System.out.println(s);
 		}
-
 	}
 }

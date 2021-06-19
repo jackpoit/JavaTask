@@ -19,6 +19,7 @@ public class Task04 {
 			}
 		}
 		System.out.println("由"+map.size()+"种符号组成");
+
 		Set<Map.Entry<Character,Integer>> set=map.entrySet();
 		List<Map.Entry<Character,Integer>> list=new LinkedList<>(set);
 		list.sort(new Comparator<Map.Entry<Character, Integer>>() {
