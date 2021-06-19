@@ -1,5 +1,11 @@
 package itwn.com.test.test03;
 
+import itwn.com.homework.task0610.atm.User;
+
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+
 public class Test01 {
 	public static void main(String[] args) {
 
@@ -12,8 +18,8 @@ public class Test01 {
 		};
 
 
-		MyMapIner<Integer,String> myMapIner=new MyMapIner<>();
 
+		MyMapIner<Integer,String> myMapIner=new MyMapIner<>();
 
 
 	}

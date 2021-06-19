@@ -1,4 +1,4 @@
-package itwn.com.exam0607.exam01;
+package itwn.com.exam.exam0607.exam01;
 
 public class Goods {
 	private int goodsID;

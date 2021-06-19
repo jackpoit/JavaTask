@@ -1,6 +1,7 @@
 package itwn.com.homework.task0608.poker;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class PokerDao {
 	private ArrayList<Poker> totalList=new ArrayList<>();
@@ -27,6 +28,7 @@ public class PokerDao {
 			int rnum1=(int) (Math.random()*list.size());
 			int rnum2=(int) (Math.random()*list.size());
 			swapPoker(rnum1,rnum2,list);
+			Collections.swap(list,rnum1,rnum2);
 		}
 	}
 	//发牌

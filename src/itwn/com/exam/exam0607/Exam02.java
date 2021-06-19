@@ -1,4 +1,4 @@
-package itwn.com.exam0607;
+package itwn.com.exam.exam0607;
 
 import java.util.Scanner;
 
