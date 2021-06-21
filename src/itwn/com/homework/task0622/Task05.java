@@ -4,51 +4,38 @@ public class Task05 {
 
 	public static void main(String[] args) {
 		Ticket ticket=new Ticket();
-//		new Thread(()->{
-//			ticket.sellTicket();
-//		},"一号窗口").start();
-//	new Thread(()->{
-//			ticket.sellTicket();
-//		},"二号窗口").start();
-//		new Thread(()->{
-//			ticket.sellTicket();
-//		},"三号窗口").start();
-//		new Thread(()->{
-//			ticket.sellTicket();
-//		},"四号窗口").start();
-		Thread th01=new Thread(()->{
-			ticket.sellTicket();
-		},"一号窗口");
-		Thread th02=new Thread(()->{
-			ticket.sellTicket();
-		},"二号窗口");
-		Thread th03=new Thread(()->{
-			ticket.sellTicket();
-		},"三号窗口");
-		Thread th04=new Thread(()->{
-			ticket.sellTicket();
-		},"四号窗口");
-
-		th01.start();
-		th02.start();
-		th03.start();
-		th04.start();
+		new Thread(()->{
+			ticket.sel();
+		},"一号窗口").start();
+	new Thread(()->{
+			ticket.sel();
+		},"二号窗口").start();
+		new Thread(()->{
+			ticket.sel();
+		},"三号窗口").start();
+		new Thread(()->{
+			ticket.sel();
+		},"四号窗口").start();
 	}
 
 }
 class Ticket{
-	private static int count=100;
-	public synchronized static void sellTicket(){
-		while (count>0){
+	private volatile int count=100;
+	public void sel(){
+		while (true) {
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			System.out.println(Thread.currentThread().getName()+"卖的第"+count--+"张票");
-
+			if (count <= 0) {
+				break;
+			}
+			sellTicket();
 		}
-
+	}
+	public synchronized void sellTicket(){
+		System.out.println(Thread.currentThread().getName() + "卖的第" + count-- + "张票");
 	}
 
 }
