@@ -4,8 +4,8 @@ import java.util.*;
 
 public class Task04 {
 	public static void main(String[] args) {
-//		使用Scanner从键盘输入任意内容，统计这个字符串由多少种符号组成，并统计每个字符出现的次
-//	数,还要求按照出现的次数降序排列，如果次数相同按照字符的值进行顺序排列
+//		使用Scanner从键盘输入任意内容，统计这个字符串由多少种符号组成，并统计每个字符出现的次数,
+//		还要求按照出现的次数降序排列，如果次数相同按照字符的值进行顺序排列
 		Scanner scanner=new Scanner(System.in);
 		System.out.println("请输入：");
 		String str=scanner.next();

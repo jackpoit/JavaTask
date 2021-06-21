@@ -11,6 +11,5 @@ public class Task01 {
 			set.add(rnum);
 		}
 		System.out.println(set);
-
 	}
 }

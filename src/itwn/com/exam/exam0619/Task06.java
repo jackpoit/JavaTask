@@ -6,7 +6,7 @@ public class Task06 {
 	private static int fileCount=0;
 	private static int dirCount=0;
 	public static void main(String[] args) {
-//		.现有目录(D:/Woniu/images) 要求分别统计有多少个目录多少个文件组成，统计完成之后要求将此目录删除(15分)
+//	6.现有目录(D:/Woniu/images) 要求分别统计有多少个目录多少个文件组成，统计完成之后要求将此目录删除(15分)
 
 		String path="D:/Woniu/images";
 		File file=new File(path);
