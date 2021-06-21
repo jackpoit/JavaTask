@@ -6,6 +6,9 @@ public class Animal1Demo {
         System.out.println(animal01.type);
         System.out.println(animal01.sound());
 
+        Animal1 dog11=new Dog();
+        System.out.println(dog11.type);
+
 //        animal01=new Cat();
         //把Cat类的对象赋值给Animal1类型的变量没问题
         System.out.println(animal01.sound());
