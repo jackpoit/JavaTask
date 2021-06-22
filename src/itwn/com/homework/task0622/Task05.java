@@ -1,5 +1,6 @@
 package itwn.com.homework.task0622;
 
+
 public class Task05 {
 
 	public static void main(String[] args) {
@@ -20,7 +21,7 @@ public class Task05 {
 
 }
 class Ticket{
-	private volatile int count=100;
+	private int count=100;
 	public void sel(){
 		while (true) {
 			try {

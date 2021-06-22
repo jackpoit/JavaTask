@@ -1,6 +1,9 @@
-package itwn.com.chessdemo03;
+package itwn.com.homework.task0621;
 
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Labeled;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Font;
 
