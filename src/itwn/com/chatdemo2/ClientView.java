@@ -19,13 +19,13 @@ import java.net.Socket;
 
 
 public class ClientView extends Stage {
-	private static Socket client = null;
-	private final static String HOST="192.168.5.21";
-	private final static int PORT = 9688;
-	private static DataInputStream ins = null;
-	private static DataOutputStream out = null;
+	private  Socket client;
+	private   String HOST="192.168.5.21";
+	private   int PORT =9888;
+	private DataInputStream ins;
+	private DataOutputStream out;
+	public ClientView()  {
 
-	public ClientView() throws IOException {
 		Pane root=new Pane();
 		root.setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
 		Image img0 = new Image("file:file/1.jpg",350,500,false,false);
@@ -45,19 +45,19 @@ public class ClientView extends Stage {
 		this.setTitle("客户端界面");
 		this.setScene(scene);
 		this.setResizable(false);
-		this.show();
 
 		sendBtn.setOnMouseClicked(event -> {
 			if (out!=null) {
-				String request = textField.getText();
-				textArea.appendText(request+"\n");
-				textField.clear();
 				try {
-					out.writeUTF("e："+request);
+					String request = textField.getText();
+					out.writeUTF("e："+request+"\n");
+					textArea.setText(textArea.getText()+request+"\n");
+					textField.setText("");
+
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
+				textField.clear();
 			}
 		});
 
@@ -66,15 +66,16 @@ public class ClientView extends Stage {
 				client = new Socket(HOST,PORT);
 				ins = new DataInputStream(client.getInputStream());
 				out = new DataOutputStream(client.getOutputStream());
+				while (true){
+					try {
+						String serverTalk=ins.readUTF();
+						textArea.setText(textArea.getText()+serverTalk);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
-			while (true){
-				try {
-					textArea.appendText(ins.readUTF()+"\n");
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
 			}
 		}).start();
 
