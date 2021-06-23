@@ -1,4 +1,4 @@
-package itwn.com.homework.task0621;
+package itwn.com.chatdemo2;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -9,8 +9,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ChatRoom extends Application {
 
@@ -42,11 +43,13 @@ public class ChatRoom extends Application {
         primaryStage.show();
 
         clientBtn.setOnMouseClicked(event -> {
-			new ClientView();
 
-
+			try {
+				new ClientView();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
 		});
-
 	}
 }
